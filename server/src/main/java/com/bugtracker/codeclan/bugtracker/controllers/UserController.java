@@ -16,7 +16,13 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers(
+            @RequestParam(name = "bug_id", required = false) Long id
+    ){
+        if(id != null)  {
+            return new ResponseEntity(userRepository.findByBugsId(id),HttpStatus.OK);
+        }
+
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
