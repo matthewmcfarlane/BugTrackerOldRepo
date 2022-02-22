@@ -29,9 +29,25 @@ public class DataLoader implements ApplicationRunner {
         User guilherme = new User("456def", "Guilherme Nunes", "gnunes", "gn@example.com", "moderator");
         userRepository.save(guilherme);
 
+        User matthew = new User("789ghi","Matthew Mcfarlane", "mmcfarlane", "mm@example.com", "moderator");
+        userRepository.save(matthew);
+
+        User scott = new User("101jkl","Scott Reoch", "sreoch", "sr@example.com", "basic permission");
+        userRepository.save(scott);
+
         Bug bug1 = new Bug("bug description", "severe");
         bug1.addAssignee(adam);
         bug1.addAssignee(guilherme);
         bugRepository.save(bug1);
+
+        Bug bug2 = new Bug("bug description2", "low");
+        bug2.addAssignee(matthew);
+        bugRepository.save(bug2);
+
+        Bug bug3 = new Bug("bug description3", "low");
+        bug3.addAssignee(scott);
+        bugRepository.save(bug3);
+
+
     }
 }
