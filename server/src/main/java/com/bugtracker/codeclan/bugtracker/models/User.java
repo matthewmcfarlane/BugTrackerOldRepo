@@ -24,7 +24,7 @@ public class User {
     private String permission;
 
     @ManyToMany
-    @JsonIgnoreProperties({"users"})
+    @JsonIgnoreProperties({"assignees"})
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinTable(
             name = "users_bugs",
