@@ -18,7 +18,12 @@ public class BugController {
     BugRepository bugRepository;
 
     @GetMapping(value = "/bugs")
-    public ResponseEntity<List<Bug>> getAllBugs(){
+    public ResponseEntity<List<Bug>> getAllBugs(
+            @RequestParam (name = "user_id", required = false) Long id
+    ){
+        if(id != null) {
+            return new ResponseEntity(bugRepository.findByAssigneesId(id), HttpStatus.OK);
+        }
         return new ResponseEntity<>(bugRepository.findAll(), HttpStatus.OK);
     }
 
