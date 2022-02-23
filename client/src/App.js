@@ -6,16 +6,18 @@ import Profile from './components/Profile';
 import { useAuth0 } from '@auth0/auth0-react';
 import Logo from './components/Logo';
 import Navbar from './components/Navbar';
+import Loading from './components/loading';
 
 function App() {
-  const { isLoading } = useAuth0();
+  const { isLoading, loginWithRedirect, isAuthenticated } = useAuth0();
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Loading />
 
   return (
+    !isAuthenticated &&(loginWithRedirect()),
     <div>
       <Navbar />
-      <LoginButton />
+      {/* <LoginButton /> */}
       {/* <LogoutButton /> */}
       <Profile />
     </div>
