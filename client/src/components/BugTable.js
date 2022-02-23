@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 const BugTable = () => {
 
+    const {user} = useAuth0();
+
+
     const [allBugs, setAllBugs] = useState([])
+    const [allUsers, setAllUsers] = useState([])
 
     useEffect(() => {
         getAllBugs();
     })
 
     const getAllBugs = () => {
-        fetch('http://localhost:8080/bugs')
+        fetch('http://localhost:9090/bugs')
         .then(result => result.json())
         .then(data => setAllBugs(data));
+    }
+
+    const getAllUsers = () => {
+        fetch('http://localhost:8080/users')
+        .then(result => result.json())
+        .then(data => setAllUsers(data));
+        
     }
 
     const bugRows = allBugs.map((bug, index) => {
@@ -20,11 +33,11 @@ const BugTable = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
-                            <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt=""/>
+                            <img className="h-10 w-10 rounded-full" src={user.picture} alt=""/>
                         </div>
                         <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">Jane Cooper</div>
-                            <div className="text-sm text-gray-500">jane.cooper@example.com</div>
+                            <div className="text-sm font-medium text-gray-900">{user.nickname}</div>
+                            <div className="text-sm text-gray-500">{user.email}</div>
                         </div>
                     </div>
                 </td>
@@ -53,9 +66,10 @@ const BugTable = () => {
                             <thead className="bg-gray-50">
                                 <tr>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severity</th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Posted</th>
                                     <th scope="col" className="relative px-6 py-3">
                                         <span className="sr-only">Edit</span>
                                     </th>
