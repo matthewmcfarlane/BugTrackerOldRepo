@@ -15,13 +15,13 @@ const BugTable = () => {
     })
 
     const getAllBugs = () => {
-        fetch('http://localhost:8080/bugs')
+        fetch('http://localhost:9090/bugs')
         .then(result => result.json())
         .then(data => setAllBugs(data));
     }
 
     const getAllUsers = () => {
-        fetch('http://localhost:8080/users')
+        fetch('http://localhost:9090/users')
         .then(result => result.json())
         .then(data => setAllUsers(data));
         
@@ -53,7 +53,12 @@ const BugTable = () => {
                     <div className="text-sm text-gray-500">Optimization</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
+                    {bug.severity == 'low' ?
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> {bug.severity} </span>
+                    : bug.severity == 'medium' ?
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"> {bug.severity} </span>
+                    :
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"> {bug.severity} </span>}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Admin</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
