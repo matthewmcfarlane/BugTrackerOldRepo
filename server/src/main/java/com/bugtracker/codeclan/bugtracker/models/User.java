@@ -21,7 +21,7 @@ public class User {
     private String name;
     private String nickname;
     private String email;
-    private String permission;
+    private String role;
 
     @ManyToMany
     @JsonIgnoreProperties({"assignees"})
@@ -41,12 +41,12 @@ public class User {
     )
     private List<Bug> bugs;
 
-    public User(String auth0Sub, String name, String nickname, String email, String permission) {
+    public User(String auth0Sub, String name, String nickname, String email, String role) {
         this.auth0Sub = auth0Sub;
         this.name = name;
         this.nickname = nickname;
         this.email = email;
-        this.permission = permission;
+        this.role = role;
         this.bugs = new ArrayList<>();
     }
 
@@ -93,19 +93,19 @@ public class User {
         this.email = email;
     }
 
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-
     public List<Bug> getBugs() {
         return bugs;
     }
 
     public void setBugs(List<Bug> bugs) {
         this.bugs = bugs;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

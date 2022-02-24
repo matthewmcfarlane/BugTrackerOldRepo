@@ -23,66 +23,63 @@ public class DataLoader implements ApplicationRunner {
     }
 
     public void run(ApplicationArguments args){
-        User adam = new User("123abc", "Adam Kidd", "aKidd", "adam@example.com", "read only");
+        User adam = new User("123abc", "Adam Kidd", "aKidd", "adam@example.com", "admin");
         userRepository.save(adam);
 
-        User guilherme = new User("456def", "Guilherme Nunes", "gNunes", "gn@example.com", "contribute");
+        User guilherme = new User("456def", "Guilherme Nunes", "gNunes", "gn@example.com", "admin");
         userRepository.save(guilherme);
 
-        User matthew = new User("789ghi","Matthew Mcfarlane", "mMcfarlane", "mm@example.com", "designer");
+        User matthew = new User("789ghi","Matthew Mcfarlane", "mMcfarlane", "mm@example.com", "admin");
         userRepository.save(matthew);
 
-        User scott = new User("101jkl","Scott Reoch", "sReoch", "sr@example.com", "full control");
+        User scott = new User("101jkl","Scott Reoch", "sReoch", "sr@example.com", "admin");
         userRepository.save(scott);
 
-        User clark = new User("111mno","Clark Kent", "cKent", "ck@example.com", "contribute");
+        User clark = new User("111mno","Clark Kent", "cKent", "ck@example.com", "user");
         userRepository.save(clark);
 
-        User bruce = new User("121pqr", "Bruce Wayne", "bWayne", "bw@example.com", "contribute");
+        User bruce = new User("121pqr", "Bruce Wayne", "bWayne", "bw@example.com", "user");
         userRepository.save(bruce);
 
-        User barry = new User("131stu","Barry Allen", "bAllen", "ba@example.com", "designer");
+        User barry = new User("131stu","Barry Allen", "bAllen", "ba@example.com", "user");
         userRepository.save(barry);
 
-        User oliver = new User("141vxz","Oliver Queen", "oQueen", "oq@example.com", "full control");
+        User oliver = new User("141vxz","Oliver Queen", "oQueen", "oq@example.com", "user");
         userRepository.save(oliver);
 
 
-
-
-        Bug bug1 = new Bug("bug description1", "high");
+        Bug bug1 = new Bug("bug description1", "high", adam);
         bug1.addAssignee(adam);
         bug1.addAssignee(guilherme);
         bugRepository.save(bug1);
 
-        Bug bug2 = new Bug("bug description2", "low");
+        Bug bug2 = new Bug("bug description2", "low", matthew);
         bug2.addAssignee(matthew);
         bugRepository.save(bug2);
 
-        Bug bug3 = new Bug("bug description3", "medium");
+        Bug bug3 = new Bug("bug description3", "medium", scott);
         bug3.addAssignee(clark);
         bugRepository.save(bug3);
 
-        Bug bug4 = new Bug("bug description4", "high");
+        Bug bug4 = new Bug("bug description4", "high", guilherme);
         bug4.addAssignee(bruce);
         bugRepository.save(bug4);
 
-        Bug bug5 = new Bug("bug description5", "low");
+        Bug bug5 = new Bug("bug description5", "low", guilherme);
         bug5.addAssignee(barry);
         bugRepository.save(bug5);
 
-        Bug bug6 = new Bug("bug description6", "high");
+        Bug bug6 = new Bug("bug description6", "high", matthew);
         bug6.addAssignee(oliver);
         bugRepository.save(bug6);
 
-        Bug bug7 = new Bug("bug description7", "low");
+        Bug bug7 = new Bug("bug description7", "low", clark);
         bug7.addAssignee(guilherme);
         bugRepository.save(bug7);
 
-        Bug bug8 = new Bug("bug description8", "medium");
+        Bug bug8 = new Bug("bug description8", "medium", bruce);
         bug8.addAssignee(matthew);
         bugRepository.save(bug8);
-
 
     }
 }
