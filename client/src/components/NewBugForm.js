@@ -20,10 +20,10 @@ const NewBugForm = () => {
         setFormData(formData);
     }
 
-    // const onSubmit = (event) => {
-    //     event.preventDefault();
-    //     postBug(formData);
-    // }
+    const onSubmit = (event) => {
+        event.preventDefault();
+        // postBug(formData);
+    }
 
     return(
         <form onSubmit={onSubmit} method="post">
