@@ -4,16 +4,38 @@ import { useAuth0 } from "@auth0/auth0-react";
 const BugTable = () => {
   const { user } = useAuth0();
   const [allBugs, setAllBugs] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [checked, setChecked] = useState(
+    new Array({allBugs}.length).fill(false)
+  );
 
   useEffect(() => {
     getAllBugs();
-  },[]);
+  }, []);
 
   const getAllBugs = () => {
-    fetch("http://localhost:8080/bugs")
+    fetch("http://localhost:9090/bugs")
       .then((result) => result.json())
       .then((data) => setAllBugs(data));
   };
+
+  const handleEditingClick = () => {
+    if (isEditing == false) {
+      setIsEditing(true)
+    } else {
+      setIsEditing(false);
+    }
+  }
+
+  const handleOnChange = (position) => {
+    const updatedCheckState = checked.map((item, index) =>
+    index === position ? !item : item
+    );
+
+    setChecked(updatedCheckState);
+  };
+
 
   const bugRows = allBugs.map((bug, index) => {
     let status = "Open";
@@ -26,6 +48,9 @@ const BugTable = () => {
       <tr className="" key={index}>
         <td className="px-6 py-4 whitespace-nowrap">
           <div className="flex items-center">
+            {isEditing == true ?
+            <input id={`custom-checkbox-${index}`} className="mr-2" name={bug.name} value={bug.name} type="checkbox" checked={checked[index]} onChange={() => handleOnChange(index)}/>
+            : isEditing == false} 
             <div className="flex-shrink-0 h-10 w-10">
               <img
                 className="h-10 w-10 rounded-full"
@@ -80,16 +105,26 @@ const BugTable = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="ml-2 mt-2 mb-2">
-        <select>
-          <option value="" selected disabled hidden>
-            filter by...
-          </option>
-          <option value="completed">completed</option>
-          <option value="high-severity">high severity</option>
-          <option value="medium-severity">medium severity</option>
-          <option value="low-severity">low severity</option>
-        </select>
+      <div className="flex flex-row">
+        <div className="ml-2 mt-2 mb-2">
+          <select>
+            <option value="" selected disabled hidden>
+              filter by...
+            </option>
+            <option value="completed">completed</option>
+            <option value="high-severity">high severity</option>
+            <option value="medium-severity">medium severity</option>
+            <option value="low-severity">low severity</option>
+          </select>
+          {/* {isEditing == true ? 
+          <button onClick={() => setChecked((c) => !c)}>Uncheck</button>
+          : isEditing == false} */}
+        </div>
+        <div>
+          <button onClick={() => handleEditingClick()} className="mt-2 mb-2 bg-orange-400 rounded hover:bg-orange-600 p-2 ">
+            Edit
+          </button>
+        </div>
       </div>
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
