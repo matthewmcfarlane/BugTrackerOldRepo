@@ -9,7 +9,8 @@ import Navbar from './components/Navbar';
 import Loading from './components/loading';
 
 function App() {
-  const { isLoading, loginWithRedirect, isAuthenticated } = useAuth0();
+  const { isLoading, loginWithRedirect, isAuthenticated, user } = useAuth0();
+ 
 
   if (isLoading) return <Loading />
 
