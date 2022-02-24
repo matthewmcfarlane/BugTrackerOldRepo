@@ -4,7 +4,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 const BugTable = () => {
   const { user } = useAuth0();
   const [allBugs, setAllBugs] = useState([]);
-  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
     getAllBugs();
@@ -16,13 +15,6 @@ const BugTable = () => {
       .then((data) => setAllBugs(data));
   };
 
-
-  const getAllUsers = () => {
-    fetch("http://localhost:8080/users")
-      .then((result) => result.json())
-      .then((data) => setAllUsers(data));
-  };
-
   const bugRows = allBugs.map((bug, index) => {
     let status = "Open";
     if (bug.resolved) {
@@ -31,7 +23,7 @@ const BugTable = () => {
       status = "Open";
     }
     return (
-      <tr className="">
+      <tr className="" key={index}>
         <td className="px-6 py-4 whitespace-nowrap">
           <div className="flex items-center">
             <div className="flex-shrink-0 h-10 w-10">
