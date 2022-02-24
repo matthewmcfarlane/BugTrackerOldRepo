@@ -17,8 +17,8 @@ const BugTable = () => {
 
   const getAllBugs = () => {
     fetch("http://localhost:9090/bugs")
-      .then((result) => result.json())
-      .then((data) => setAllBugs(data));
+    .then((result) => result.json())
+    .then((data) => setAllBugs(data));
   };
 
   const handleEditingClick = () => {
@@ -37,13 +37,25 @@ const BugTable = () => {
     setChecked(updatedCheckState);
   };
 
+  const assigneeElements = (bug) => {
+    return bug.assignees.map((assignee, index) => {
+      <>
+        <div className="text-sm font-medium text-gray-900">
+          {assignee.name}
+        </div>
+        <div className="text-sm text-gray-500">
+          {assignee.email}
+        </div>
+      </>
+    })
+  }
 
   const bugRows = allBugs.map((bug, index) => {
     let status = "Open";
-    if (bug.resolved) {
-      status = "Closed";
-    } else {
+    if (bug.active) {
       status = "Open";
+    } else {
+      status = "Closed";
     }
     return (
       <tr className="" key={index}>
@@ -60,12 +72,7 @@ const BugTable = () => {
               />
             </div>
             <div className="ml-4">
-              <div className="text-sm font-medium text-gray-900">
-                {bug.assignees[0].name}
-              </div>
-              <div className="text-sm text-gray-500">
-                {bug.assignees[0].email}
-              </div>
+              {assigneeElements(bug)}
             </div>
           </div>
         </td>
@@ -74,20 +81,20 @@ const BugTable = () => {
           <div className="text-sm text-gray-500">Optimization</div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-          {bug.severity == "low" ? (
+          {bug.priority == "low" ? (
             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
               {" "}
-              {bug.severity}{" "}
+              {bug.priority}{" "}
             </span>
-          ) : bug.severity == "medium" ? (
+          ) : bug.priority == "medium" ? (
             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
               {" "}
-              {bug.severity}{" "}
+              {bug.priority}{" "}
             </span>
           ) : (
             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
               {" "}
-              {bug.severity}{" "}
+              {bug.priority}{" "}
             </span>
           )}
         </td>
@@ -99,6 +106,12 @@ const BugTable = () => {
             Edit
           </a>
           {status}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          {bug.reporter.name}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          {bug.dateReported}
         </td>
       </tr>
     );
