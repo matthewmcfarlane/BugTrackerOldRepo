@@ -8,7 +8,7 @@ const NewBugForm = () => {
 
     useEffect(() => {
         getAllUsers();
-    })
+    }, [])
 
     const getAllUsers = () => {
         fetch('http://localhost:9090/users')
@@ -32,7 +32,9 @@ const NewBugForm = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        postBug(formData, selectedReporter);
+        if(formData.priority && formData.reporter){
+            postBug(formData, selectedReporter);
+        }
     }
 
     return(
@@ -42,6 +44,7 @@ const NewBugForm = () => {
 
             <label htmlFor="priorty">Severity:</label>
             <select onChange={onChange} id="priority" required>
+                <option value="">Select an option...</option>
                 <option value="high">High</option>
                 <option value="medium">Medium</option>
                 <option value="low">Low</option>
@@ -49,6 +52,7 @@ const NewBugForm = () => {
 
             <label htmlFor="reporter">Reported By:</label>
             <select onChange={onChange} id="reporter" required>
+                <option value="">Select a user...</option>
                 {userOptions}
             </select>
 
