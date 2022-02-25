@@ -1,6 +1,7 @@
 const baseURL = 'http://localhost:9090/';
 
-const postBug = (payload) => {
+const postBug = (payload, selectedReporter) => {
+    payload.reporter = selectedReporter;
     return fetch(baseURL + "bugs", {
         method: 'POST',
         body: JSON.stringify(payload),
