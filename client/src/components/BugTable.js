@@ -7,14 +7,19 @@ const BugTable = () => {
   const { user } = useAuth0();
   const [allBugs, setAllBugs] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [formSubmissionToggler, setFormSubmissionToggler] = useState(false);
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
   );
 
+  const onBugAddition = () => {
+    setFormSubmissionToggler(!formSubmissionToggler);
+  }
+
   useEffect(() => {
     getAllBugs();
-  }, []);
+  }, [formSubmissionToggler]);
 
   const getAllBugs = () => {
     fetch("http://localhost:9090/bugs")
@@ -198,7 +203,7 @@ const BugTable = () => {
           </div>
         </div>
       </div>
-      <NewBugForm/>
+      <NewBugForm onBugAddition={onBugAddition}/>
     </div>
   );
 };

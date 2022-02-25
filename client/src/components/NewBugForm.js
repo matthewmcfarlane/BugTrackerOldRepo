@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import postBug from "../services/BugsService";
 
-const NewBugForm = () => {
+const NewBugForm = ({ onBugAddition }) => {
     const [allUsers, setAllUsers] = useState([]);
     const [formData, setFormData] = useState({});
     const [selectedReporter, setSelectedReporter] = useState({});
@@ -34,6 +34,7 @@ const NewBugForm = () => {
         event.preventDefault();
         if(formData.priority && formData.reporter){
             postBug(formData, selectedReporter);
+            onBugAddition();
         }
     }
 
