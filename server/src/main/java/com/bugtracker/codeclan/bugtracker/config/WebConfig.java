@@ -2,11 +2,14 @@ package com.bugtracker.codeclan.bugtracker.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class SpringGlobalConfig implements WebMvcConfigurer {    private static final String CORS_BASE_PATTERN = "/**";
-    private static final String ALLOWED_ORIGINS = "*";
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+    private static final String CORS_BASE_PATTERN = "/**";
+    private static final String ALLOWED_ORIGINS = "http://localhost:3000";
     private static final String ALLOWED_HEADERS = "*";
     private static final String ALLOWED_METHODS = "*";
 
@@ -15,6 +18,7 @@ public class SpringGlobalConfig implements WebMvcConfigurer {    private static 
         registry.addMapping(CORS_BASE_PATTERN)
                 .allowedOrigins(ALLOWED_ORIGINS)
                 .allowedHeaders(ALLOWED_HEADERS)
-                .allowedMethods(ALLOWED_METHODS);
+                .allowedMethods(ALLOWED_METHODS)
+                .allowCredentials(true).maxAge(3600);
     }
 }

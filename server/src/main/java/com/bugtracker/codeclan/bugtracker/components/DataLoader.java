@@ -53,33 +53,33 @@ public class DataLoader implements ApplicationRunner {
         bug1.addAssignee(guilherme);
         bugRepository.save(bug1);
 
-        Bug bug2 = new Bug("bug description2", "low", matthew);
-        bug2.addAssignee(matthew);
-        bugRepository.save(bug2);
-
-        Bug bug3 = new Bug("bug description3", "medium", scott);
-        bug3.addAssignee(clark);
-        bugRepository.save(bug3);
-
-        Bug bug4 = new Bug("bug description4", "high", guilherme);
-        bug4.addAssignee(bruce);
-        bugRepository.save(bug4);
-
-        Bug bug5 = new Bug("bug description5", "low", guilherme);
-        bug5.addAssignee(barry);
-        bugRepository.save(bug5);
-
-        Bug bug6 = new Bug("bug description6", "high", matthew);
-        bug6.addAssignee(oliver);
-        bugRepository.save(bug6);
-
-        Bug bug7 = new Bug("bug description7", "low", clark);
-        bug7.addAssignee(guilherme);
-        bugRepository.save(bug7);
-
-        Bug bug8 = new Bug("bug description8", "medium", bruce);
-        bug8.addAssignee(matthew);
-        bugRepository.save(bug8);
+//        Bug bug2 = new Bug("bug description2", "low", matthew);
+//        bug2.addAssignee(matthew);
+//        bugRepository.save(bug2);
+//
+//        Bug bug3 = new Bug("bug description3", "medium", scott);
+//        bug3.addAssignee(clark);
+//        bugRepository.save(bug3);
+//
+//        Bug bug4 = new Bug("bug description4", "high", guilherme);
+//        bug4.addAssignee(bruce);
+//        bugRepository.save(bug4);
+//
+//        Bug bug5 = new Bug("bug description5", "low", guilherme);
+//        bug5.addAssignee(barry);
+//        bugRepository.save(bug5);
+//
+//        Bug bug6 = new Bug("bug description6", "high", matthew);
+//        bug6.addAssignee(oliver);
+//        bugRepository.save(bug6);
+//
+//        Bug bug7 = new Bug("bug description7", "low", clark);
+//        bug7.addAssignee(guilherme);
+//        bugRepository.save(bug7);
+//
+//        Bug bug8 = new Bug("bug description8", "medium", bruce);
+//        bug8.addAssignee(matthew);
+//        bugRepository.save(bug8);
 
     }
 }

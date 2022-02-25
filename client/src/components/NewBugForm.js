@@ -7,7 +7,7 @@ const NewBugForm = () => {
     const [selectedReporter, setSelectedReporter] = useState({});
 
     useEffect(() => {
-        getAllUsers();
+        //return getAllUsers();
     })
 
     const getAllUsers = () => {
@@ -42,6 +42,7 @@ const NewBugForm = () => {
 
             <label htmlFor="priorty">Severity:</label>
             <select onChange={onChange} id="priority" required>
+                <option value=""></option>
                 <option value="high">High</option>
                 <option value="medium">Medium</option>
                 <option value="low">Low</option>
@@ -49,6 +50,7 @@ const NewBugForm = () => {
 
             <label htmlFor="reporter">Reported By:</label>
             <select onChange={onChange} id="reporter" required>
+                <option value="" key=""></option>
                 {userOptions}
             </select>
 
