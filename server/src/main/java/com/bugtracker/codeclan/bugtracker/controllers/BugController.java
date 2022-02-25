@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,8 @@ public class BugController {
 
     @PostMapping(value = "/bugs")
     public ResponseEntity<Bug> postBug(@RequestBody Bug bug){
+        bug.setDateReported(LocalDate.now());
+        bug.setActive(Boolean.TRUE);
         bugRepository.save(bug);
         return new ResponseEntity<>(bug, HttpStatus.CREATED);
     }
