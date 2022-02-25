@@ -11,6 +11,7 @@ import BugTable from './components/BugTable';
 
 function App() {
   const { isLoading, loginWithRedirect, isAuthenticated, user } = useAuth0();
+  
  
 
   if (isLoading) return <Loading />

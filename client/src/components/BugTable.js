@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NewBugForm from "./NewBugForm";
+import { deleteBug } from "../services/BugsService"
 
 const BugTable = () => {
   const { user } = useAuth0();
@@ -48,6 +49,15 @@ const BugTable = () => {
         </div>
       </>
     })
+  }
+
+  const removeBug = (id) => {
+    const temp = allBugs.map(s => s);
+    const indexToDel = temp.map(s => s._id).indexOf(id);
+    console.log(indexToDel);
+
+    temp.splice(indexToDel, 1);
+    setAllBugs(temp);
   }
 
   const bugRows = allBugs.map((bug, index) => {
@@ -130,9 +140,9 @@ const BugTable = () => {
             <option value="medium-severity">medium severity</option>
             <option value="low-severity">low severity</option>
           </select>
-          {/* {isEditing == true ? 
-          <button onClick={() => setChecked((c) => !c)}>Uncheck</button>
-          : isEditing == false} */}
+          {isEditing == true ? 
+          <button onClick={() => removeBug()}>Remove Bugs</button>
+          : isEditing == false}
         </div>
         <div>
           <button onClick={() => handleEditingClick()} className="mt-2 mb-2 bg-orange-400 rounded hover:bg-orange-600 p-2 ">
