@@ -38,8 +38,12 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public ResponseEntity<User> postUser(@RequestBody User user){
-        userRepository.save(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        User foundUser = userRepository.findByAuth0Sub(user.getAuth0Sub());
+        if (foundUser == null) {
+            userRepository.save(user);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(foundUser, HttpStatus.OK);
     }
 
 }

@@ -8,10 +8,22 @@ import Logo from './components/Logo';
 import Navbar from './components/Navbar';
 import Loading from './components/loading';
 import BugTable from './components/BugTable';
-import {getUserByAuth0Sub, postUser} from './services/UserService';
 
 function App() {
   const { isLoading, loginWithRedirect, isAuthenticated, user } = useAuth0();
+  const [foundUser, setFoundUser] = useState(null);
+
+  const baseURL = 'http://localhost:9090/users/';
+
+  const postUser = (payload) => {
+    return fetch(baseURL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json'}
+    })
+    .then(res => res.json())
+    .then(data => setFoundUser(data));
+  }
   
   const checkUserInDB = () => {
 
@@ -23,18 +35,14 @@ function App() {
       "role": user["http://demozero.net/roles"][0]
     };
 
-    const fetchedUser = getUserByAuth0Sub(user.sub);
-
-    if(!fetchedUser){
-      postUser(userData);
-    }
+    postUser(userData);
   }
 
   useEffect(() => {
     if(isAuthenticated){
       checkUserInDB();
     }
-  })
+  }, [user])
 
   if (isLoading) return <Loading />
 
