@@ -198,6 +198,7 @@ const BugTable = () => {
           </div>
         </div>
       </div>
+      <NewBugForm/>
     </div>
   );
 };
