@@ -17,7 +17,7 @@ const Profile = () => {
           <JSONPretty data={user} />
           {JSON.stringify(user, null, 2)}
         </div>
-      </> 
+      </>
     )
   )
 }

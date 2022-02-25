@@ -43,7 +43,13 @@ public class UserController {
             userRepository.save(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(foundUser, HttpStatus.OK);
+        else {
+            foundUser.setName(user.getName());
+            foundUser.setNickname(user.getNickname());
+            foundUser.setEmail(user.getEmail());
+            foundUser.setRole(user.getRole());
+            return new ResponseEntity<>(foundUser, HttpStatus.OK);
+        }
     }
 
 }
