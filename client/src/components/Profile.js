@@ -10,17 +10,17 @@ const Profile = () => {
   return (
     isAuthenticated && (
       <>
-     <div>
-        <img src={user.picture} alt={user.name} />
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-        <JSONPretty data={user} />
-        {JSON.stringify(user, null, 2)}
-      </div>
-      </> 
+        <div>
+          <img src={user.picture} alt={user.name} />
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+          <JSONPretty data={user} />
+          {JSON.stringify(user, null, 2)}
+        </div>
+      </>
     )
   )
 }
 
 
-export default Profile
+export default Profile;
