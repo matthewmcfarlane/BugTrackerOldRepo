@@ -26,9 +26,14 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/users/{id}")
-    public ResponseEntity getUserById(@PathVariable Long id){
-        return new ResponseEntity(userRepository.findById(id), HttpStatus.OK);
+//    @GetMapping(value = "/users/{id}")
+//    public ResponseEntity getUserById(@PathVariable Long id){
+//        return new ResponseEntity(userRepository.findById(id), HttpStatus.OK);
+//    }
+
+    @GetMapping(value = "/users/{auth0Sub}")
+    public ResponseEntity getUserByAuth0Sub(@PathVariable String auth0Sub){
+        return new ResponseEntity(userRepository.findByAuth0Sub(auth0Sub), HttpStatus.OK);
     }
 
     @PostMapping(value = "/users")
@@ -36,4 +41,5 @@ public class UserController {
         userRepository.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
 }

@@ -8,5 +8,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByBugsId(Long id);
+    User findByAuth0Sub(String auth0Sub);
 
 }
