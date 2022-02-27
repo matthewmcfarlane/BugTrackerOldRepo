@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NewBugForm from "./NewBugForm";
-import { deleteBug } from "../services/BugsService"
+import { deleteBug, patchBug } from "../services/BugsService"
 
 const BugTable = () => {
   const { user } = useAuth0();
@@ -42,6 +42,19 @@ const BugTable = () => {
 
     setChecked(updatedCheckState);
   };
+
+  const handleToggleActive = (event) => {
+    event.preventDefault();
+
+    const toggledBug = allBugs[event.target.value];
+    toggledBug.active = !toggledBug.active;
+
+    console.log(toggledBug);
+
+    patchBug(toggledBug);
+
+    setFormSubmissionToggler(!formSubmissionToggler);
+  }
 
   const assigneeElements = (bug) => {
     return bug.assignees.map((assignee, index) => {
@@ -127,6 +140,9 @@ const BugTable = () => {
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
           {bug.dateReported}
+        </td>
+        <td>
+          <button value={index} onClick={handleToggleActive}>Toggle Active</button>
         </td>
       </tr>
     );
