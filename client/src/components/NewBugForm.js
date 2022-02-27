@@ -35,16 +35,32 @@ const NewBugForm = ({ onBugAddition }) => {
         if(formData.priority && formData.reporter){
             postBug(formData, selectedReporter);
             onBugAddition();
+            setFormData({
+                'description': "",
+                'priority': "",
+                'reporter': ""
+            });
         }
     }
 
     return(
         <form onSubmit={onSubmit} method="post">
             <label htmlFor="description">Bug Description:</label>
-            <input onChange={onChange} type="text" id="description" required/>
+            <input
+            onChange={onChange}
+            type="text"
+            id="description"
+            value={formData.description}
+            required
+            />
 
             <label htmlFor="priorty">Severity:</label>
-            <select onChange={onChange} id="priority" required>
+            <select
+            onChange={onChange}
+            id="priority"
+            value={formData.priority}
+            required
+            >
                 <option value="">Select an option...</option>
                 <option value="high">High</option>
                 <option value="medium">Medium</option>
@@ -52,7 +68,12 @@ const NewBugForm = ({ onBugAddition }) => {
             </select>
 
             <label htmlFor="reporter">Reported By:</label>
-            <select onChange={onChange} id="reporter" required>
+            <select
+            onChange={onChange}
+            id="reporter"
+            value={formData.reporter}
+            required
+            >
                 <option value="">Select a user...</option>
                 {userOptions}
             </select>
