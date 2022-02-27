@@ -3,8 +3,9 @@ import { postBug } from "../services/BugsService";
 
 const NewBugForm = ({ onBugAddition }) => {
     const [allUsers, setAllUsers] = useState([]);
-    const [formData, setFormData] = useState({});
-    const [selectedReporter, setSelectedReporter] = useState({});
+    const [description, setDescription] = useState("");
+    const [priority, setPriority] = useState("");
+    const [reporter, setReporter] = useState("");
 
     useEffect(() => {
         getAllUsers();
@@ -23,23 +24,28 @@ const NewBugForm = ({ onBugAddition }) => {
     })
 
     const onChange = (event) => {
-        formData[event.target.id] = event.target.value;
-        setFormData(formData);
-        if(event.target.id == 'reporter'){
-            setSelectedReporter(allUsers[event.target.value]);
+        if(event.target.id === "description"){
+            setDescription(event.target.value);
+        }
+        else if(event.target.id === "priority"){
+            setPriority(event.target.value);
+        }
+        else if(event.target.id === "reporter"){
+            setReporter(event.target.value);
         }
     }
 
     const onSubmit = (event) => {
         event.preventDefault();
-        if(formData.priority && formData.reporter){
-            postBug(formData, selectedReporter);
+        if(priority && reporter){
+            postBug({
+                'description': description,
+                'priority': priority
+            }, allUsers[reporter]);
             onBugAddition();
-            setFormData({
-                'description': "",
-                'priority': "",
-                'reporter': ""
-            });
+            setDescription("");
+            setPriority("");
+            setReporter("");
         }
     }
 
@@ -50,7 +56,7 @@ const NewBugForm = ({ onBugAddition }) => {
             onChange={onChange}
             type="text"
             id="description"
-            value={formData.description}
+            value={description}
             required
             />
 
@@ -58,7 +64,7 @@ const NewBugForm = ({ onBugAddition }) => {
             <select
             onChange={onChange}
             id="priority"
-            value={formData.priority}
+            value={priority}
             required
             >
                 <option value="">Select an option...</option>
@@ -71,10 +77,10 @@ const NewBugForm = ({ onBugAddition }) => {
             <select
             onChange={onChange}
             id="reporter"
-            value={formData.reporter}
+            value={reporter}
             required
             >
-                <option value="">Select a user...</option>
+            <option value="">Select a user...</option>
                 {userOptions}
             </select>
 
