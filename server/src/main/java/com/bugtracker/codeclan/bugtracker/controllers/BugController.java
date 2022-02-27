@@ -48,4 +48,10 @@ public class BugController {
         bugRepository.delete(found);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
+
+    @PatchMapping(value = "/bugs/{id}")
+    public ResponseEntity<Bug> updateBug(@RequestBody Bug bug){
+        bugRepository.save(bug);
+        return new ResponseEntity<>(bug, HttpStatus.OK);
+    }
 }

@@ -1,8 +1,8 @@
-const baseURL = 'http://localhost:9090/';
+const baseURL = 'http://localhost:9090/bugs';
 
-const postBug = (payload, selectedReporter) => {
+export const postBug = (payload, selectedReporter) => {
     payload.reporter = selectedReporter;
-    return fetch(baseURL + "bugs", {
+    return fetch(baseURL, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: { 'Content-Type': 'application/json'}
@@ -11,10 +11,16 @@ const postBug = (payload, selectedReporter) => {
 }
 
 export const deleteBug = (id) => {
-    return fetch(baseURL + "bugs" + id, {
+    return fetch(baseURL + id, {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'}
     })
 }
 
-export default postBug;
+export const patchBug = (payload) => {
+    return fetch(baseURL + payload.id, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application.json'},
+        body: JSON.stringify(payload)
+    })
+}
