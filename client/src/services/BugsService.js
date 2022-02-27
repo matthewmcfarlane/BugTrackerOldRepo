@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:9090/bugs';
+const baseURL = 'http://localhost:9090/bugs/';
 
 export const postBug = (payload, selectedReporter) => {
     payload.reporter = selectedReporter;
@@ -20,7 +20,7 @@ export const deleteBug = (id) => {
 export const patchBug = (payload) => {
     return fetch(baseURL + payload.id, {
         method: 'PATCH',
-        headers: {'Content-Type': 'application.json'},
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
     })
 }
