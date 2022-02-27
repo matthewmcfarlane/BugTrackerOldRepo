@@ -45,27 +45,24 @@ const BugTable = () => {
 
   const handleToggleActive = (event) => {
     event.preventDefault();
-
     const toggledBug = allBugs[event.target.value];
     toggledBug.active = !toggledBug.active;
-
-    console.log(toggledBug);
-
     patchBug(toggledBug);
-
     setFormSubmissionToggler(!formSubmissionToggler);
   }
 
   const assigneeElements = (bug) => {
     return bug.assignees.map((assignee, index) => {
-      <>
-        <div className="text-sm font-medium text-gray-900">
-          {assignee.name}
+      return(
+        <div key={index}>
+          <div className="text-sm font-medium text-gray-900">
+            {assignee.name}
+          </div>
+          <div className="text-sm text-gray-500">
+            {assignee.email}
+          </div>
         </div>
-        <div className="text-sm text-gray-500">
-          {assignee.email}
-        </div>
-      </>
+      )
     })
   }
 
@@ -93,11 +90,11 @@ const BugTable = () => {
             <input id={`custom-checkbox-${index}`} className="mr-2" name={bug.name} value={bug.name} type="checkbox" checked={checked[index]} onChange={() => handleOnChange(index)}/>
             : isEditing == false} 
             <div className="flex-shrink-0 h-10 w-10">
-              <img
+              {/* <img
                 className="h-10 w-10 rounded-full"
                 src={user.picture}
                 alt=""
-              />
+              /> */}
             </div>
             <div className="ml-4">
               {assigneeElements(bug)}
@@ -152,8 +149,8 @@ const BugTable = () => {
     <div className="flex flex-col">
       <div className="flex flex-row">
         <div className="ml-2 mt-2 mb-2">
-          <select>
-            <option value="" selected disabled hidden>
+          <select defaultValue="">
+            <option value="" disabled hidden>
               filter by...
             </option>
             <option value="completed">completed</option>
