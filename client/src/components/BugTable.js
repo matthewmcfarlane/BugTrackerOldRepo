@@ -13,13 +13,26 @@ const BugTable = () => {
     new Array({allBugs}.length).fill(false)
   );
 
-  const onBugAddition = () => {
-    setFormSubmissionToggler(!formSubmissionToggler);
+  const onBugAddition = (newBug) => {
+    //Generate date to display
+    var today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth()).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    today = yyyy + mm + dd;
+
+    //Fill in missing fields to allow render
+    newBug['dateReported'] = today;
+    newBug['assignees'] = [];
+    newBug['active'] = true;
+
+    const updatedBugs = [...allBugs, newBug];
+    setAllBugs(updatedBugs);
   }
 
   useEffect(() => {
     getAllBugs();
-  }, [formSubmissionToggler]);
+  }, []);
 
   const getAllBugs = () => {
     fetch("http://localhost:9090/bugs")
