@@ -44,7 +44,12 @@ const NewBugForm = ({ onBugAddition }) => {
                 'description': description,
                 'priority': priority
             }, allUsers[reporter]);
-            onBugAddition();
+            const newBug = {
+                'description': description,
+                'priority': priority,
+                'reporter': allUsers[reporter],
+            }
+            onBugAddition(newBug);
             setDescription("");
             setPriority("");
             setReporter("");
