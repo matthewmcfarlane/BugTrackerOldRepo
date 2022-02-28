@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NewBugForm from "./NewBugForm";
 import { deleteBug, patchBug } from "../services/BugsService"
+import { filterByPriority } from "../services/SortAndFilter";
 
 const BugTable = () => {
   const { user } = useAuth0();
   const [allBugs, setAllBugs] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [bugsToRender, setBugsToRender] = useState([]);
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
@@ -33,10 +35,17 @@ const BugTable = () => {
     getAllBugs();
   }, []);
 
+  useEffect(() => {
+    setBugsToRender(allBugs);
+  }, [allBugs]);
+
   const getAllBugs = () => {
     fetch("http://localhost:9090/bugs")
     .then((result) => result.json())
-    .then((data) => setAllBugs(data));
+    .then((data) => {
+      setAllBugs(data);
+      setBugsToRender(data);
+    });
   };
 
   const handleEditingClick = () => {
@@ -94,7 +103,16 @@ const BugTable = () => {
     deleteBug(id);
   }
 
-  const bugRows = allBugs.map((bug, index) => {
+  const onFilterByPriority = (event) => {
+    if (event.target.value === "clear"){
+      setBugsToRender(allBugs);
+    }
+    else{
+      setBugsToRender(filterByPriority(allBugs, event.target.value));
+    }
+  } 
+
+  const bugRows = bugsToRender.map((bug, index) => {
     let status = "Open";
     if (bug.active) {
       status = "Open";
@@ -170,14 +188,14 @@ const BugTable = () => {
     <div className="flex flex-col">
       <div className="flex flex-row">
         <div className="ml-2 mt-2 mb-2">
-          <select defaultValue="">
+          <select defaultValue="" onChange={onFilterByPriority}>
             <option value="" disabled hidden>
-              filter by...
+              filter by priority...
             </option>
-            <option value="completed">completed</option>
-            <option value="high-severity">high severity</option>
-            <option value="medium-severity">medium severity</option>
-            <option value="low-severity">low severity</option>
+            <option value="clear">show all</option>
+            <option value="high">high</option>
+            <option value="medium">medium</option>
+            <option value="low">low</option>
           </select>
           {isEditing == true ? 
           <button onClick={() => removeBug()}>Remove Bugs</button>

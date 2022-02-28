@@ -8,12 +8,12 @@ export const filterByPriority = (bugList, priority="high") => {
 
 export const filterByUser = (bugList, userAuth0Sub) => {
     const filteredBugList = [];
-    for(bug of bugList){
+    for(const bug of bugList){
         if(bug.reporter.auth0Sub === userAuth0Sub){
             filteredBugList.push(bug);
         }
         else{
-            for(assignee of bug.assignees){
+            for(const assignee of bug.assignees){
                 if(assignee.auth0Sub === userAuth0Sub){
                     filteredBugList.push(bug);
                 }
