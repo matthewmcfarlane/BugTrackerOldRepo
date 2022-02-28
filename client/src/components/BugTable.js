@@ -39,6 +39,8 @@ const BugTable = () => {
 
   useEffect(() => {
     setBugsToRender(allBugs);
+    setActiveFilter("clear");
+    setPriorityFilter("clear");
   }, [allBugs]);
 
   const getAllBugs = () => {
@@ -106,21 +108,25 @@ const BugTable = () => {
   }
 
   const onFilterByPriority = (event) => {
+    setPriorityFilter(event.target.value);
     if (event.target.value === "clear"){
       setBugsToRender(allBugs);
     }
     else{
       setBugsToRender(filterByPriority(allBugs, event.target.value));
+      setActiveFilter("clear");
     }
   } 
 
   const onFilterByActive = (event) => {
     const selectedOption = event.target.value;
+    setActiveFilter(selectedOption);
     if (selectedOption === "clear"){
       setBugsToRender(allBugs);
     }
     else{
       setBugsToRender(filterByActive(allBugs, (selectedOption === "true")));
+      setPriorityFilter("clear");
     }
   }
 
@@ -200,7 +206,7 @@ const BugTable = () => {
     <div className="flex flex-col">
       <div className="flex flex-row">
         <div className="ml-2 mt-2 mb-2">
-          <select defaultValue="clear" onChange={onFilterByPriority}>
+          <select value={priorityFilter} onChange={onFilterByPriority}>
             <option value="clear" disabled hidden>
               filter by priority...
             </option>
@@ -209,7 +215,7 @@ const BugTable = () => {
             <option value="medium">medium</option>
             <option value="low">low</option>
           </select>
-          <select defaultValue="clear" onChange={onFilterByActive}>
+          <select value={activeFilter} onChange={onFilterByActive}>
             <option value="clear" disabled hidden>
               filter by status...
             </option>
