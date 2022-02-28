@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { postBug } from "../services/BugsService";
 
 
-
 const NewBugForm = ({ onBugAddition }) => {
     const [allUsers, setAllUsers] = useState([]);
     const [description, setDescription] = useState("");

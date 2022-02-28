@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NewBugForm from "./NewBugForm";
 import { deleteBug, patchBug } from "../services/BugsService"
-import { filterByPriority } from "../services/SortAndFilter";
+import { filterByPriority, filterByActive } from "../services/SortAndFilter";
 
 const BugTable = () => {
   const { user } = useAuth0();
   const [allBugs, setAllBugs] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [bugsToRender, setBugsToRender] = useState([]);
+  const [priorityFilter, setPriorityFilter] = useState("clear");
+  const [activeFilter, setActiveFilter] = useState("clear");
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
@@ -112,6 +114,16 @@ const BugTable = () => {
     }
   } 
 
+  const onFilterByActive = (event) => {
+    const selectedOption = event.target.value;
+    if (selectedOption === "clear"){
+      setBugsToRender(allBugs);
+    }
+    else{
+      setBugsToRender(filterByActive(allBugs, (selectedOption === "true")));
+    }
+  }
+
   const bugRows = bugsToRender.map((bug, index) => {
     let status = "Open";
     if (bug.active) {
@@ -188,14 +200,22 @@ const BugTable = () => {
     <div className="flex flex-col">
       <div className="flex flex-row">
         <div className="ml-2 mt-2 mb-2">
-          <select defaultValue="" onChange={onFilterByPriority}>
-            <option value="" disabled hidden>
+          <select defaultValue="clear" onChange={onFilterByPriority}>
+            <option value="clear" disabled hidden>
               filter by priority...
             </option>
             <option value="clear">show all</option>
             <option value="high">high</option>
             <option value="medium">medium</option>
             <option value="low">low</option>
+          </select>
+          <select defaultValue="clear" onChange={onFilterByActive}>
+            <option value="clear" disabled hidden>
+              filter by status...
+            </option>
+            <option value="clear">show all</option>
+            <option value="true">open</option>
+            <option value="false">closed</option>
           </select>
           {isEditing == true ? 
           <button onClick={() => removeBug()}>Remove Bugs</button>
