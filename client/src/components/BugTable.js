@@ -143,6 +143,9 @@ const BugTable = () => {
           <button value={index} onClick={handleToggleActive}>Toggle Active</button>
         </td>
         <td>
+          <button value={index} onClick={handleEditingClick}>Edit</button>
+        </td>
+        <td>
           <button value={index} onClick={() => removeBug(bug.id)}>Remove</button>
         </td>
       </tr>
