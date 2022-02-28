@@ -7,7 +7,6 @@ const BugTable = () => {
   const { user } = useAuth0();
   const [allBugs, setAllBugs] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [formSubmissionToggler, setFormSubmissionToggler] = useState(false);
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
@@ -58,10 +57,16 @@ const BugTable = () => {
 
   const handleToggleActive = (event) => {
     event.preventDefault();
-    const toggledBug = allBugs[event.target.value];
+
+    //Find toggled bug and flip value
+    const bugIndex = event.target.value;
+    const toggledBug = allBugs[bugIndex];
     toggledBug.active = !toggledBug.active;
-    patchBug(toggledBug);
-    setFormSubmissionToggler(!formSubmissionToggler);
+
+    const updatedBugsList = [...allBugs];
+    updatedBugsList[bugIndex] = toggledBug;
+    patchBug(toggledBug)
+    .then(setAllBugs(updatedBugsList));
   }
 
   const assigneeElements = (bug) => {
@@ -80,7 +85,6 @@ const BugTable = () => {
   }
 
   const removeBug = (id) => {
-    console.log(id);
     const temp = allBugs.map(s => s);
     const indexToDel = temp.map(s => s.id).indexOf(id);
     
