@@ -67,12 +67,14 @@ const BugTable = () => {
   }
 
   const removeBug = (id) => {
+    console.log(id);
     const temp = allBugs.map(s => s);
-    const indexToDel = temp.map(s => s._id).indexOf(id);
-    console.log(indexToDel);
+    const indexToDel = temp.map(s => s.id).indexOf(id);
+    
 
     temp.splice(indexToDel, 1);
     setAllBugs(temp);
+    deleteBug(id);
   }
 
   const bugRows = allBugs.map((bug, index) => {
@@ -139,6 +141,9 @@ const BugTable = () => {
         </td>
         <td>
           <button value={index} onClick={handleToggleActive}>Toggle Active</button>
+        </td>
+        <td>
+          <button value={index} onClick={() => removeBug(bug.id)}>Remove</button>
         </td>
       </tr>
     );
