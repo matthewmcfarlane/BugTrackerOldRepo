@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NewBugForm from "./NewBugForm";
 import { deleteBug, patchBug } from "../services/BugsService"
-import { filterByPriority, filterByActive, sortByDate } from "../services/SortAndFilter";
+import { filterByPriority, filterByActive, sortByDate, sortByPriority } from "../services/SortAndFilter";
 
 const BugTable = () => {
   const { user } = useAuth0();
@@ -12,6 +12,7 @@ const BugTable = () => {
   const [priorityFilter, setPriorityFilter] = useState("clear");
   const [activeFilter, setActiveFilter] = useState("clear");
   const [dateSort, setDateSort] = useState("clear");
+  const [prioritySort, setPrioritySort] = useState("clear");
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
@@ -112,6 +113,7 @@ const BugTable = () => {
     setPriorityFilter(event.target.value);
     setActiveFilter("clear");
     setDateSort("clear");
+    setPrioritySort("clear");
     if (event.target.value === "clear"){
       setBugsToRender(allBugs);
     }
@@ -123,19 +125,27 @@ const BugTable = () => {
   const onFilterByActive = (event) => {
     const selectedOption = event.target.value;
     setActiveFilter(selectedOption);
+    setPriorityFilter("clear");
     setDateSort("clear");
+    setPrioritySort("clear");
     if (selectedOption === "clear"){
       setBugsToRender(allBugs);
     }
     else{
       setBugsToRender(filterByActive(allBugs, (selectedOption === "true")));
-      setPriorityFilter("clear");
     }
   }
 
   const onSortByDate = (event) => {
+    setPrioritySort("clear");
     setDateSort(event.target.value);
     setBugsToRender(sortByDate(bugsToRender, (event.target.value === "newestFirst")));
+  }
+
+  const onSortByPriority = (event) => {
+    setDateSort("clear");
+    setPrioritySort(event.target.value);
+    setBugsToRender(sortByPriority(bugsToRender, (event.target.value === "highestFirst")));
   }
 
   const bugRows = bugsToRender.map((bug, index) => {
@@ -237,6 +247,13 @@ const BugTable = () => {
             </option>
             <option value="newestFirst">newest first</option>
             <option value="oldestFirst">oldest first</option>
+          </select>
+          <select value={prioritySort} onChange={onSortByPriority}>
+            <option value="clear" disabled hidden>
+              sort by priority...
+            </option>
+            <option value="highestFirst">highest first</option>
+            <option value="lowestFirst">lowest first</option>
           </select>
           {isEditing == true ? 
           <button onClick={() => removeBug()}>Remove Bugs</button>
