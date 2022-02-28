@@ -25,9 +25,19 @@ export const filterByUser = (bugList, userAuth0Sub) => {
 
 export const sortByDate = (bugList, newestFirst = true) => {
     if(newestFirst){
-        return bugList.sort((a, b) => Date.parse(a.dateReported) - Date.parse(b.dateReported));
+        return bugList.sort((a, b) => Date.parse(b.dateReported) - Date.parse(a.dateReported));
     }
     else{
-        return bugList.sort((a, b) => Date.parse(b.dateReported)  - Date.parse(a.dateReported));
+        return bugList.sort((a, b) => Date.parse(a.dateReported)  - Date.parse(b.dateReported));
+    }
+}
+
+export const sortByPriority = (bugList, highestPriorityFirst = true) => {
+    const order = ["high", "medium", "low"];
+    if(highestPriorityFirst){
+        return bugList.sort((a, b) => order.indexOf(a.priority) - order.indexOf(b.priority));
+    }
+    else{
+        return bugList.sort((a, b) => order.indexOf(b.priority) - order.indexOf(a.priority));
     }
 }

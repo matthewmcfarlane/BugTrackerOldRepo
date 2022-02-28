@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NewBugForm from "./NewBugForm";
 import { deleteBug, patchBug } from "../services/BugsService"
-import { filterByPriority, filterByActive } from "../services/SortAndFilter";
+import { filterByPriority, filterByActive, sortByDate } from "../services/SortAndFilter";
 
 const BugTable = () => {
   const { user } = useAuth0();
@@ -11,6 +11,7 @@ const BugTable = () => {
   const [bugsToRender, setBugsToRender] = useState([]);
   const [priorityFilter, setPriorityFilter] = useState("clear");
   const [activeFilter, setActiveFilter] = useState("clear");
+  const [dateSort, setDateSort] = useState("clear");
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
@@ -109,18 +110,20 @@ const BugTable = () => {
 
   const onFilterByPriority = (event) => {
     setPriorityFilter(event.target.value);
+    setActiveFilter("clear");
+    setDateSort("clear");
     if (event.target.value === "clear"){
       setBugsToRender(allBugs);
     }
     else{
       setBugsToRender(filterByPriority(allBugs, event.target.value));
-      setActiveFilter("clear");
     }
   } 
 
   const onFilterByActive = (event) => {
     const selectedOption = event.target.value;
     setActiveFilter(selectedOption);
+    setDateSort("clear");
     if (selectedOption === "clear"){
       setBugsToRender(allBugs);
     }
@@ -128,6 +131,11 @@ const BugTable = () => {
       setBugsToRender(filterByActive(allBugs, (selectedOption === "true")));
       setPriorityFilter("clear");
     }
+  }
+
+  const onSortByDate = (event) => {
+    setDateSort(event.target.value);
+    setBugsToRender(sortByDate(bugsToRender, (event.target.value === "newestFirst")));
   }
 
   const bugRows = bugsToRender.map((bug, index) => {
@@ -222,6 +230,13 @@ const BugTable = () => {
             <option value="clear">show all</option>
             <option value="true">open</option>
             <option value="false">closed</option>
+          </select>
+          <select value={dateSort} onChange={onSortByDate}>
+            <option value="clear" disabled hidden>
+              sort by date...
+            </option>
+            <option value="newestFirst">newest first</option>
+            <option value="oldestFirst">oldest first</option>
           </select>
           {isEditing == true ? 
           <button onClick={() => removeBug()}>Remove Bugs</button>

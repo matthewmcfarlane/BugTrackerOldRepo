@@ -9,6 +9,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class DataLoader implements ApplicationRunner {
 
@@ -55,22 +57,27 @@ public class DataLoader implements ApplicationRunner {
 
         Bug bug2 = new Bug("bug description2", "low", matthew);
         bug2.addAssignee(matthew);
+        bug2.setDateReported(LocalDate.of(2020, 10, 12));
         bugRepository.save(bug2);
 
         Bug bug3 = new Bug("bug description3", "medium", scott);
         bug3.addAssignee(clark);
+        bug3.setDateReported(LocalDate.of(2020, 8, 7));
         bugRepository.save(bug3);
 
         Bug bug4 = new Bug("bug description4", "high", guilherme);
         bug4.addAssignee(bruce);
+        bug4.setDateReported(LocalDate.of(2021, 2, 5));
         bugRepository.save(bug4);
 
         Bug bug5 = new Bug("bug description5", "low", guilherme);
         bug5.addAssignee(barry);
+        bug5.setDateReported((LocalDate.of(2021, 1, 26)));
         bugRepository.save(bug5);
 
         Bug bug6 = new Bug("bug description6", "high", matthew);
         bug6.addAssignee(oliver);
+        bug6.setDateReported(LocalDate.of(2020, 12, 28));
         bugRepository.save(bug6);
 
         Bug bug7 = new Bug("bug description7", "low", clark);
