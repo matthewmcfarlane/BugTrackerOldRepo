@@ -1,3 +1,5 @@
+import AssigneeElements from "./AssigneeElements";
+
 const BugRows = ({ bugsToRender, isEditing, checked, handleOnChange, assigneeElements, handleToggleActive, removeBug }) => {
      return bugsToRender.map((bug, index) => {
         let status = "Open";
@@ -21,7 +23,7 @@ const BugRows = ({ bugsToRender, isEditing, checked, handleOnChange, assigneeEle
                   /> */}
                 </div>
                 <div className="ml-4">
-                  {assigneeElements(bug)}
+                  <AssigneeElements bug={bug}/>
                 </div>
               </div>
             </td>

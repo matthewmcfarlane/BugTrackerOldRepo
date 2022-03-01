@@ -86,21 +86,6 @@ const BugTable = () => {
     .then(setAllBugs(updatedBugsList));
   }
 
-  const assigneeElements = (bug) => {
-    return bug.assignees.map((assignee, index) => {
-      return(
-        <div key={index}>
-          <div className="text-sm font-medium text-gray-900">
-            {assignee.name}
-          </div>
-          <div className="text-sm text-gray-500">
-            {assignee.email}
-          </div>
-        </div>
-      )
-    })
-  }
-
   const removeBug = (id) => {
     const temp = allBugs.map(s => s);
     const indexToDel = temp.map(s => s.id).indexOf(id);
@@ -248,7 +233,6 @@ const BugTable = () => {
                 isEditing={isEditing}
                 checked={checked}
                 handleOnChange={handleOnChange}
-                assigneeElements={assigneeElements}
                 handleToggleActive={handleToggleActive}
                 removeBug={removeBug}
                 />
@@ -264,7 +248,7 @@ const BugTable = () => {
       </div>
       : isAddingBug == false
       }
-    </div>
+      </div>
     </div>
   );
 };
