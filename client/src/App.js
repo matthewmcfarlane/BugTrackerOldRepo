@@ -52,7 +52,7 @@ function App() {
       <Navbar />
       {/* <LoginButton /> */}
       {/* <LogoutButton /> */}
-      <Profile />
+      {/* <Profile /> */}
       <BugTable />
     </div>
   );
