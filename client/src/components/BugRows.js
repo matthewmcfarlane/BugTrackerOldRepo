@@ -1,6 +1,8 @@
+import { useState } from "react";
 import AssigneeElements from "./AssigneeElements";
 
-const BugRows = ({ bugsToRender, isEditing, checked, handleOnChange, assigneeElements, handleToggleActive, removeBug }) => {
+const BugRows = ({ bugsToRender, isEditing, checked, handleOnChange, handleToggleActive, removeBug, handleChangePriority, priorityLevel }) => {
+
      return bugsToRender.map((bug, index) => {
         let status = "Open";
         if (bug.active) {
@@ -48,6 +50,11 @@ const BugRows = ({ bugsToRender, isEditing, checked, handleOnChange, assigneeEle
                   {bug.priority}{" "}
                 </span>
               )}
+              <select id={index} value={bug.priority} onChange={handleChangePriority}>
+                <option value="high">high</option>
+                <option value="medium">medium</option>
+                <option value="low">low</option>
+              </select>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               Admin

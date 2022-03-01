@@ -14,7 +14,7 @@ const BugTable = () => {
   const [activeFilter, setActiveFilter] = useState("clear");
   const [dateSort, setDateSort] = useState("clear");
   const [prioritySort, setPrioritySort] = useState("clear");
-  const [isAddingBug, setIsAddingBug] = useState(false)
+  const [isAddingBug, setIsAddingBug] = useState(false);
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
@@ -62,6 +62,13 @@ const BugTable = () => {
     } else {
       setIsEditing(false);
     }
+  }
+
+  const handleChangePriority = (event) => {
+    const updatedList = [...allBugs];
+    updatedList[event.target.id].priority = event.target.value;
+    setAllBugs(updatedList);
+    patchBug(updatedList[event.target.id]);
   }
 
   const handleOnChange = (position) => {
@@ -235,6 +242,7 @@ const BugTable = () => {
                 handleOnChange={handleOnChange}
                 handleToggleActive={handleToggleActive}
                 removeBug={removeBug}
+                handleChangePriority={handleChangePriority}
                 />
               </thead>
               <tbody className="bg-white divide-y divide-gray-200"></tbody>
