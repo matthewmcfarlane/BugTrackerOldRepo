@@ -158,7 +158,7 @@ const NewBugForm = ({ onBugAddition, setIsAddingBug }) => {
       </div>
       <div class="flex flex-wrap -mx-3 mb-2">
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <input onClick={() => setIsAddingBug(false)} type="submit" value="Save" id="save" />
+          <input onSubmit={() => setIsAddingBug(false)} type="submit" value="Save" id="save" />
         </div>
       </div>
     </form>
