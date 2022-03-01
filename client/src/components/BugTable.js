@@ -13,6 +13,7 @@ const BugTable = () => {
   const [activeFilter, setActiveFilter] = useState("clear");
   const [dateSort, setDateSort] = useState("clear");
   const [prioritySort, setPrioritySort] = useState("clear");
+  const [isAddingBug, setIsAddingBug] = useState(false)
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
@@ -103,10 +104,13 @@ const BugTable = () => {
     const temp = allBugs.map(s => s);
     const indexToDel = temp.map(s => s.id).indexOf(id);
     
-
     temp.splice(indexToDel, 1);
     setAllBugs(temp);
     deleteBug(id);
+  }
+
+  const toggleAdding = () => {
+    isAddingBug == false ? setIsAddingBug(true) : setIsAddingBug(false)
   }
 
   const onFilterByPriority = (event) => {
@@ -221,6 +225,7 @@ const BugTable = () => {
   });
 
   return (
+    <div className={`${isAddingBug == true ? 'backdrop-blur-xl' : ''}`}>
     <div className="flex flex-col">
       <div className="flex flex-row">
         <div className="ml-2 mt-2 mb-2">
@@ -263,6 +268,9 @@ const BugTable = () => {
           <button onClick={() => handleEditingClick()} className="mt-2 mb-2 bg-orange-400 rounded hover:bg-orange-600 p-2 ">
             Edit
           </button>
+        </div>
+        <div>
+          <button onClick={() => {toggleAdding()}} className="bg-orange-400 rounded mt-2 mb-2 ml-1 hover:bg-orange-600 p-2 w-10">+</button>
         </div>
       </div>
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -313,7 +321,13 @@ const BugTable = () => {
           </div>
         </div>
       </div>
+      { isAddingBug == true ?
+      <div className="flex absolute bg-orange-300 shadow-2xl p-20 rounded-xl border-8 border-orange-400 align-middle ml-80 mt-20">
       <NewBugForm onBugAddition={onBugAddition}/>
+      </div>
+      : isAddingBug == false
+      }
+    </div>
     </div>
   );
 };
