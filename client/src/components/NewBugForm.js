@@ -95,7 +95,7 @@ const NewBugForm = ({ onBugAddition }) => {
     //     <input type="submit" value="Save" id="save"/>
     // </form>
 
-    <form class="blur-none w-full max-w-lg">
+    <form onSubmit={onSubmit} class="blur-none w-full max-w-lg">
       <div class="flex flex-wrap -mx-3 mb-6">
           {/* <h3 className="">Post a bug!</h3> */}
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
