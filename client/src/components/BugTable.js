@@ -325,7 +325,7 @@ const BugTable = () => {
       </div>
       { isAddingBug == true ?
       <div className="flex absolute bg-orange-300 shadow-2xl p-20 rounded-xl border-8 border-orange-400 align-middle ml-80 mt-20">
-      <NewBugForm onBugAddition={onBugAddition}/>
+      <NewBugForm setIsAddingBug={setIsAddingBug} onBugAddition={onBugAddition}/>
       </div>
       : isAddingBug == false
       }
