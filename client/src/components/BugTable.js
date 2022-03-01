@@ -15,10 +15,22 @@ const BugTable = () => {
   const [dateSort, setDateSort] = useState("clear");
   const [prioritySort, setPrioritySort] = useState("clear");
   const [isAddingBug, setIsAddingBug] = useState(false);
+  const [allUsers, setAllUsers] = useState([]);
+  const [addUserFieldValue, setAddUserFieldValue] = useState("");
 
   const [checked, setChecked] = useState(
     new Array({allBugs}.length).fill(false)
   );
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  const getAllUsers = () => {
+    fetch("http://localhost:9090/users")
+      .then((result) => result.json())
+      .then((data) => setAllUsers(data));
+  };
 
   const onBugAddition = (newBug) => {
     //Generate date to display
@@ -35,6 +47,22 @@ const BugTable = () => {
 
     const updatedBugs = [...allBugs, newBug];
     setAllBugs(updatedBugs);
+  }
+
+  const onAddAssignee = (event) => {
+    const editedBug = allBugs[event.target.id];
+    const newAssigneeId = event.target.value;
+    for(const user of allUsers){
+      if(user.id == newAssigneeId){
+        var newAssignee = user;
+      }
+    }
+    editedBug.assignees.push(newAssignee);
+    patchBug(editedBug);
+    const updatedList = [...allBugs];
+    updatedList[event.target.id] = editedBug;
+    setAllBugs(updatedList);
+    setAddUserFieldValue("");
   }
 
   useEffect(() => {
@@ -243,6 +271,9 @@ const BugTable = () => {
                 handleToggleActive={handleToggleActive}
                 removeBug={removeBug}
                 handleChangePriority={handleChangePriority}
+                onAddAssignee={onAddAssignee}
+                allUsers={allUsers}
+                addUserFieldValue={addUserFieldValue}
                 />
               </thead>
               <tbody className="bg-white divide-y divide-gray-200"></tbody>
