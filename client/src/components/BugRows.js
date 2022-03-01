@@ -1,7 +1,23 @@
-import { useState } from "react";
 import AssigneeElements from "./AssigneeElements";
+import { useState, useEffect } from "react";
 
-const BugRows = ({ bugsToRender, isEditing, checked, handleOnChange, handleToggleActive, removeBug, handleChangePriority, priorityLevel }) => {
+const BugRows = ({ bugsToRender, isEditing, checked, handleOnChange, handleToggleActive, removeBug, handleChangePriority, onAddAssignee, allUsers, addUserFieldValue }) => {
+
+  const userOptions = (bug) => {
+    const usersToRender = allUsers.filter(user => {
+      for(const assignee of bug.assignees){
+        if(user.id == assignee.id){
+          return false;
+        }
+      }
+      return true;
+    });
+    return (usersToRender.map((user, index) => {
+      return(
+        <option key={index} value={user.id}>{user.name}</option>
+      )
+    }))
+  }
 
      return bugsToRender.map((bug, index) => {
         let status = "Open";
@@ -26,6 +42,10 @@ const BugRows = ({ bugsToRender, isEditing, checked, handleOnChange, handleToggl
                 </div>
                 <div className="ml-4">
                   <AssigneeElements bug={bug}/>
+                  <select value={addUserFieldValue} id={index} onChange={onAddAssignee}>
+                    <option value="" hidden disabled>add an assignee</option>
+                    {userOptions(bug)}
+                  </select>
                 </div>
               </div>
             </td>
